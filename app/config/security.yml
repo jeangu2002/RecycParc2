@@ -1,0 +1,60 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    access_denied_url: /accessDenied
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+    
+   # role_hierarchy:
+    #    ROLE_GERANT_INTERCOMMUNALE: [ROLE_GERANT_INTERCOMMUNALE,ROLE_GERANT,ROLE_EMPLOYE]
+     #   ROLE_GERANT: [ROLE_GERANT,ROLE_EMPLOYE]
+      #  ROLE_EMPLOYE: ROLE_EMPLOYE
+       # ROLE_MENAGE: ROLE_MENAGE
+    
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+    
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: /user/index
+                
+            logout:       true
+            anonymous:    true
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
+    access_control:
+        # require ROLE_ADMIN for /admin*
+        - { path: ^/index, roles: GERANT_INTERCOMMUNAL }
+        - { path: ^/menage/create, roles: [ROLE_EMPLOYE,ROLE_GERANT,ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/user/index, roles: [ROLE_EMPLOYE,ROLE_GERANT,ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/conteneur/cloturer, roles: ROLE_GERANT }
+        - { path: ^/menage/edit, roles: [ROLE_GERANT_INTERCOMMUNALE,ROLE_GERANT,ROLE_EMPLOYE] }
+        - { path: ^/menage/delete, roles: [ROLE_EMPLOYE,ROLE_GERANT,ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/parc/delete, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/parc/edit, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/facture/generatefacture, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/dechet/create, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/dechet/edit, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/parc/statsShow, roles: [ROLE_GERANT_INTERCOMMUNALE,ROLE_GERANT] }
+        - { path: ^/parc/stats, roles: [ROLE_GERANT_INTERCOMMUNALE,ROLE_GERANT] }
+        - { path: ^/dechet/delete, roles: [ROLE_GERANT_INTERCOMMUNALE] }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+        <link rel="stylesheet" href="{{asset("base.css")}}">
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        {% block stylesheets %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block menu %}
+            <header class="header9" id="header9">
+
+                <nav role="navigation" class="navbar navbar-default">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button data-target="#navbar-collapse-02" data-toggle="collapse" class="navbar-toggle" type="button">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a href="#" class="navbar-brand brand"><span><img src="{{asset('logo.png')}}" style="max-width:100px; max-height:70px;  margin-top: 0px; margin-bottom: 20px;" /></span></a>
+                        </div>
+
+                        <div id="navbar-collapse-02" class="collapse navbar-collapse">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="active" id="accueil_menu"><a href="{{path("user_show_all")}}">Accueil</a></li>
+
+                                <li id="menage_menu"><a href="{{ path("menage_show_all")}}" >Ménages</a></li>
+                                <li id="employes_menu"><a href="{{path("user_show_all")}}" >Employés</a></li>
+                                <li id="contact_menu"><a href="{{path("parc_show_all")}}" >Parcs</a></li>
+                                    {% if app.user %}
+                                    <li id="contact_menu"><span>connecté: {{app.user.prenom}} {{app.user.nom}} <a href="{{ path("fos_user_security_logout")}}" >Déconexion</a></span></li>
+                                    {% else %}
+                                    <li id="contact_menu"><a class="nav-button" href="{{ path("fos_user_security_login")}}" >Connexion</a></li>
+                                    {% endif %}
+                                    
+                            </ul>
+                        </div><!-- /.navbar-collapse -->
+                    </div>
+                </nav>
+            </header><!-- header -->
+
+        {%endblock%}         
+
+        {% block body %}
+            <div class="intro center-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <div class="site-logo"><i class="fa fa-codepen"></i></div>
+                            <div class="slogan text-center">
+                                <div class="flexslider">
+
+                                    <div class="flex-viewport" style="overflow: hidden; position: relative; height: 60px;"><ul class="flex-slogan" style="height: 1000%; position: absolute; width: 100%; transition-duration: 0.6s; transform: translate3d(0px, -180px, 0px);"><li class="clone" aria-hidden="true" style="display: block;">We Love <span>Invention</span></li>
+                                            <li class="" style="display: block;">We Love <span>Creativity</span></li>
+                                            <li class="" style="display: block;">We Love <span>Convention</span></li>
+                                            <li class="flex-active-slide" style="display: block;">We Love <span>Invention</span></li>
+                                            <li class="clone" aria-hidden="true" style="display: block;">We Love <span>Creativity</span></li></ul></div></div>
+                                <p>Pempor enim incididunt ab quibusdam eu pariatur, Do nullae in sint appellat ab aut fore labore de possumus elit relinquere.</p>
+                                <a class="btn btn-info button" href="#">Download</a>
+                            </div>
+
+                        </div>
+
+                    </div><!-- row -->
+
+                </div><!-- container -->
+
+            </div><!-- intro -->
+        {% endblock %}
+        {% block footer %}
+
+            <footer id="footer6" class="footer6">
+                </div>
+                <div class="footer-copyright">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a class="logo" href="index.html">
+                                    <strong>Accueil</strong>
+                                </a>
+                            </div>
+                            <div class="col-md-5">
+                                <p>© Copyright 2017 RecycParc. All Rights Reserved.</p>
+                            </div>
+                            <div class="col-md-5">
+                                <nav id="footer-menu">
+                                    <ul>
+                                        <li><a href="{{ path("menage_show_all")}}">Menages</a></li>
+                                        <li><a href="{{path("user_show_all")}}">Employés</a></li>
+                                        <li><a href="{{path("parc_show_all")}}">Parcs</a></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        {% endblock %}
+        {% block javascripts %}
+            <script>
+                $(document).ready(function () {
+
+                    $("#menages_menu").click();
+
+                    function deactiveMenus()
+                    {
+                        $("#menages_menu").removeClass("active");
+                        $("#accueil_menu").removeClass("active");
+                        $$("#employes_menu").removeClass("active");
+                        $$("#contact_menu").removeClass("active");
+                    }
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html>
+

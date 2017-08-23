@@ -1,0 +1,16 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+register:
+    path: /register
+    defaults: { _controller: AppBundle:User:register }
+    
+app_bundle:
+    resource: '@AppBundle/Resources/config/routing.yml'
+    
+fos_user:
+    resource: '@FOSUserBundle/Resources/Config/routing/all.xml'
+
+
+
+    
